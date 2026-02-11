@@ -8,6 +8,11 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
+  @keyframes fadeOut {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -69,7 +74,7 @@ img {
 
 <!-- Question Page -->
 <div class="container" id="questionBox">
-  <h1>Will you be my Friend-Forever, <span>Appi</span>? 💖</h1>
+  <h1>Naa, Ninn Forever-Friend Houdill, <span>Appi</span>? 💖</h1>
   <button id="yesBtn" onclick="sayYes()">Yes 💕</button>
   <button id="noBtn">No 😢</button>
 </div>
@@ -90,6 +95,33 @@ img {
 </div>
 
 <script>
+  const messages = [
+  "APPI 🥺",
+  "KATTI 😭",
+  "HANDI 😏",
+  "GUDD-BIDTINI 😏",
+  "ATH-BIDTINI 😭",
+];
+
+function showRandomText() {
+  const text = document.createElement("div");
+
+  text.innerText = messages[Math.floor(Math.random() * messages.length)];
+
+  text.style.position = "absolute";
+  text.style.left = Math.random() * window.innerWidth + "px";
+  text.style.top = Math.random() * window.innerHeight + "px";
+  text.style.fontSize = "20px";
+  text.style.fontWeight = "bold";
+  text.style.color = "white";
+  text.style.animation = "fadeOut 2s forwards";
+
+  document.body.appendChild(text);
+
+  setTimeout(() => {
+    text.remove();
+  }, 2000);
+}
 
 // Moving NO button (works on mobile & desktop)
 const noBtn = document.getElementById("noBtn");
@@ -101,8 +133,16 @@ function moveButton() {
   noBtn.style.top = y + "px";
 }
 
-noBtn.addEventListener("mouseover", moveButton);
-noBtn.addEventListener("touchstart", moveButton);
+noBtn.addEventListener("mouseover", () => {
+  moveButton();
+  showRandomText();
+});
+
+noBtn.addEventListener("touchstart", () => {
+  moveButton();
+  showRandomText();
+});
+
 
 // YES button
 function sayYes() {
