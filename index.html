@@ -48,7 +48,7 @@ button {
 #noBtn {
   background-color: #ff4444;
   color: white;
-  position: absolute;
+  position: fixed;
 }
 
 .hidden {
@@ -114,24 +114,34 @@ function showRandomText() {
   text.style.fontSize = "20px";
   text.style.fontWeight = "bold";
   text.style.color = "white";
-  text.style.animation = "fadeOut 2s forwards";
+  text.style.animation = "fadeOut 4s forwards";
 
   document.body.appendChild(text);
 
   setTimeout(() => {
     text.remove();
-  }, 2000);
+  }, 4000);
 }
 
 // Moving NO button (works on mobile & desktop)
 const noBtn = document.getElementById("noBtn");
 
 function moveButton() {
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 50);
+  const buttonWidth = noBtn.offsetWidth;
+  const buttonHeight = noBtn.offsetHeight;
+
+  const padding = 20; // safe margin from edges
+
+  const maxX = window.innerWidth - buttonWidth - padding;
+  const maxY = window.innerHeight - buttonHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 }
+
 
 noBtn.addEventListener("mouseover", () => {
   moveButton();
